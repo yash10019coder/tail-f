@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <div id="logger-section">
+        <pre id="log-container"> Trying to coennect to client.</pre>
+    </div>
+    <script>
+        const ws = new WebSocket('ws://localhost:8080');
+
+        const logCont = document.getElementById('log-container');
+
+        ws.onopen = () => {
+            logCont.textContent = '';
+        }
+
+        ws.onmessage = (event) => {
+            try {
+                const data = JSON.parse(event.data);
+                if (data.lines) {
+                    data.lines.forEach(line => {
+                        if (line.trim()) {
+                            logCont.textContent += (logCont.textContent ? '\n' : '') + line;
+                        }
+                    });
+                    // logCont.textContent += (logCont.textContent ? '\n' : '') + `Error: ${data.error}`;
+                }
+
+            } catch (err) {
+                console.error(err);
+                logCont.textContent += (logCont.textContent ? '\n' : '') + `Error: ${data.error}`;
+
+            }
+        }
+
+        ws.onerror = () => {
+            logCont.textContent += (logCont.textContent ? '\n' : '') + 'Connection is closed';
+        }
+    </script>
+</body>
+</html>

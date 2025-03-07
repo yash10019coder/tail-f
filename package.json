@@ -1,0 +1,11 @@
+{
+  "name": "browserstack",
+  "version": "1.0.0",
+  "description": "tail-f command simulation",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js"
+  },
+  "author": "yash10019coder",
+  "license": "ISC"
+}
